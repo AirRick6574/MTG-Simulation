@@ -26,7 +26,13 @@ public class Card {
     public static void cardReadout(Card card) {
 
         System.out.println("Name: " + card.getName());
-        System.out.println("Supertype: " + card.getSupertype());
+
+        if (card.getSupertype().equals("")){
+            //System.out.println("Supertype: " + "None");
+        } else{
+            System.out.println("Supertype: " + card.getSupertype());
+        }
+
         System.out.println("Type: " + card.getType());
         System.out.println("CMC: " + card.getCmc());
         System.out.println("Power: " + card.getPower());
@@ -65,5 +71,8 @@ public class Card {
 
     public String getKeywords() {
         return keywords;
+    }
+
+    public void cardReadout() {
     }
 }
