@@ -4,7 +4,13 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+//Import Statements For Read text file
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import java.io.*;
+import java.nio.Buffer;
 
 import static com.MTG_Sim.Card.cardReadout;
 
@@ -48,9 +54,65 @@ public class Biblioplex {
         return null; // Card not found
     }
 
+    public static void txtFileCardReader(){
+        String filePath = "TestDeck.txt"; //Current File Path
+
+        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String cardString;
+
+            System.out.println("\nText Importing: Card Readout\n");
+            while ((cardString = reader.readLine()) != null) { //While cardString is not empty
+                //Skip empty lines
+                if (cardString.trim().isEmpty()) { //If cardString.trim() (Will remove spaces) is empty
+                    continue;
+                }
+
+                String[] splitParts = cardString.trim().split(" ", 2);
+                //Trims to remove spacing and then splits into array of 2, containing count and card name
+
+                if (splitParts.length == 2) { //check if correct format
+                    int count = Integer.parseInt(splitParts[0]); //convert string into Integer Data
+                    String cardName = splitParts[1];
+
+                    System.out.println("Count: " + count + ", Card: " + cardName);
+                    System.out.println("\nCard information: ");
+                    callCardDetails(cardName);
+                    System.out.println("\n");
+                } else {
+                    System.out.println("Invalid line format: " + cardString);
+                }
+            }
+
+        } catch (IOException e) { //if error occurs, jump here (no file found)
+            e.printStackTrace(); //print error
+        }
+
+
+    }
+
+    public static void callCardDetails(String card) {
+        Card currentCard = cardPull(card);
+        if (currentCard == null) {
+            return;
+        }
+        cardReadout(currentCard);
+    }
 
     public static void main(String[] args) {
+        //or (int i = 0; i < )
+        txtFileCardReader();
+
+        /*
         Card Brudiclad_Telchor_Engineer = cardPull("Brudiclad, Telchor Engineer");
         cardReadout(Brudiclad_Telchor_Engineer);
+
+        System.out.println();
+
+        Card Ashnods_Altar = cardPull("Ashnod's Altar");
+        cardReadout(Ashnods_Altar);
+
+        */
+
+
     }
 }

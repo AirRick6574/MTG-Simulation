@@ -15,7 +15,7 @@ public class Card {
         this.name = name;
         this.type = type;
         this.supertype = supertype;
-        this.cmc = cmc;
+        this.cmc = cmc; //converted Mana cost
         this.power = power;
         this.toughness = toughness;
         this.rulestext = rulestext;
